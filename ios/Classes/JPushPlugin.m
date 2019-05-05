@@ -439,6 +439,16 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandl
 
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  // 新增的功能，将 device token 放到本地
+  NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+  // NSLog(@"deviceToken=%@", deviceToken);
+  if (token) {
+      //如果获取到token ，把token存到本地
+      NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+      [userDefaults setValue:token forKey:@"flutter.deviceToken"];
+      [userDefaults synchronize];
+  }
+  // 放到本地结束
   [JPUSHService registerDeviceToken:deviceToken];
 }
 
