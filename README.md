@@ -52,3 +52,22 @@ import 'package:jpush_flutter/jpush_flutter.dart';
 
  [参考](./documents/APIs.md)
 
+### Fork 后新增功能
+
+获取 device token 后存到本地，可以用下面方法取出，然后自行通过 APNs 发送消息。
+
+使用下面的替换：
+```
+dependencies:
+  jpush_flutter: 
+    git: https://github.com/internelp/jpush-flutter-plugin
+```
+
+使用 jpush 注册 push 权限后，可以从程序中取出：
+```
+import 'package:shared_preferences/shared_preferences.dart';
+
+SharedPreferences prefs = await SharedPreferences.getInstance();
+var _deviceToken = prefs.getString("deviceToken");
+deviceToken = _deviceToken;
+```
